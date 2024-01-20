@@ -1,27 +1,48 @@
+/* Image */
 img {
     cursor: pointer;
     height: 250px;
     width: 130px;
     margin: 10px; /* Ajout d'une marge entre les cartes */
-    box-shadow: 3px 3px 6px #222; /* Ajout d'ombre pour un effet 3D */
-    border-radius: 10px; /* Bordures arrondies */
+    transition: transform 0.6s; /* Ajout de la transition pour l'effet */
+    transform-style: preserve-3d;
+    position: relative;
 } 
 
+img.front {
+    transform: rotateY(180deg);
+}
+
+img.back {
+    transform: rotateY(0deg);
+}
+/* Table */
 table {
     margin: auto;
     border-collapse: separate;
     border-spacing: 5px; /* Espacement entre les cartes */
 }
 
+/* Body */
 body {
     background-color: #333; /* Couleur de fond plus douce que le noir pur */
     color: #fff; /* Couleur de texte en blanc pour contraste */
     font-family: Arial, sans-serif; /* Police de caractère plus lisible */
 }
 
+/* Score */
 #score {
     text-align: center;
     margin-top: 20px;
     font-size: 24px;
     color: #ffd700; /* Couleur dorée pour le score */
+}
+
+/* Boutton */
+button#rejouer {
+    display: block;
+    margin: 20px auto;
+    padding: 10px 20px;
+    font-size: 20px;
+    cursor: pointer;
 }

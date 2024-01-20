@@ -1,34 +1,61 @@
 // Initialisation des variables
-var motifsCartes=[1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9]; // Tableau contenant les motifs des cartes, chaque motif est répété deux fois
-var etatsCartes=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]; // Tableau indiquant l'état de chaque carte (0 pour face cachée, 1 pour face visible, -1 pour carte retirée du jeu)
-var cartesRetournees=[]; // Tableau vide qui stockera les indices des cartes qui sont actuellement retournées
-var nbPairesTrouvees=0; // Compteur du nombre de paires trouvées
-var score = 0; // Initialisation du score à 0
+var motifsCartes = [1,1,2,2,3,3,4,4,5,5,6,6,7,7,8,8,9,9];
+var etatsCartes = new Array(18).fill(0);
+var cartesRetournees = [];
+var nbPairesTrouvees = 0;
+var score = 0;
+var imgCartes;
+var flipSound = document.getElementById("flipSound");
+var matchSound = document.getElementById("matchSound");
 
-// Récupération de toutes les images dans le tableau "tapis"
-var imgCartes=document.getElementById("tapis").getElementsByTagName("img");		
-for(var i=0; i<imgCartes.length; i++){
-	imgCartes[i].noCarte=i; // Ajout d'une propriété 'noCarte' à chaque image pour garder une référence de son indice
-	imgCartes[i].onclick=function(){
-		controleJeu(this.noCarte); // Définition de la fonction à appeler lors d'un clic sur une carte
-	}                      
+function genererTableau() {
+    var tapis = document.getElementById("tapis");
+    var ligne1 = document.getElementById("ligne1");
+    var ligne2 = document.getElementById("ligne2");
+
+    // Assurez-vous que les lignes sont vides avant de générer les cartes
+    ligne1.innerHTML = '';
+    ligne2.innerHTML = '';
+
+    for (var i = 0; i < motifsCartes.length; i++) {
+        var cellule = document.createElement("td");
+        var img = document.createElement("img");
+        img.src = "fondcarte.png";
+        img.setAttribute("class", "back");
+        img.noCarte = i;
+        img.addEventListener("click", function(){
+            controleJeu(this.noCarte);
+        });
+
+        cellule.appendChild(img);
+
+        // Ajoute les 9 premières cartes dans la première ligne
+        if (i < 9) {
+            ligne1.appendChild(cellule);
+        }
+        // Ajoute les 9 dernières cartes dans la seconde ligne
+        else {
+            ligne2.appendChild(cellule);
+        }
+    }
+
+    imgCartes = document.querySelectorAll("#tapis img");
 }
 
-initialiseJeu(); // Appel de la fonction pour initialiser le jeu en mélangeant les cartes
-
-// Fonction pour mettre à jour l'affichage de la carte selon son état
-function majAffichage(noCarte){
-	switch(etatsCartes[noCarte]){
-		case 0: // Si la carte est face cachée
-			imgCartes[noCarte].src="fondcarte.png"; // On affiche l'image de fond de la carte
-			break;
-		case 1: // Si la carte a été retournée
-			imgCartes[noCarte].src="carte"+motifsCartes[noCarte]+".png"; // On affiche le motif de la carte
-			break;
-		case -1: // Si la carte a été enlevée du jeu (une paire trouvée)
-			imgCartes[noCarte].style.visibility="hidden"; // On rend la carte invisible
-			break;
-	}
+// fonction majAffichage pour gérer l'animation des cartes
+function majAffichage(noCarte) {
+    var carte = imgCartes[noCarte];
+    if(etatsCartes[noCarte] == 0) {
+        carte.src = "fondcarte.png";
+        carte.setAttribute("class", "back"); // Retourne la carte face cachée
+    } else if (etatsCartes[noCarte] == 1) {
+        carte.src = "carte"+motifsCartes[noCarte]+".png";
+        carte.setAttribute("class", "front"); // Retourne la carte face visible
+        flipSound.play(); // Joue le son de retournement
+    } else {
+        carte.style.visibility = "hidden"; // Cache la carte si une paire est trouvée
+        matchSound.play(); // Joue le son de correspondance
+    }
 }
 
 // Fonction pour mettre à jour l'affichage du score
@@ -43,15 +70,24 @@ function rejouer(){
 	location.reload(); // Recharge la page pour recommencer le jeu
 }
 
+// Ajout de l'écouteur d'événement au bouton rejouer
+document.getElementById("rejouer").onclick = function() {
+    initialiseJeu();
+    genererTableau(); // Recréer le tableau après avoir mélangé
+};
+
 // Fonction pour mélanger les cartes au début du jeu
 function initialiseJeu(){
-	for(var position=motifsCartes.length-1; position>=1; position--){
-		var hasard=Math.floor(Math.random()*(position+1)); // Génère un indice aléatoire
-		var sauve=motifsCartes[position]; // Sauvegarde le motif de la carte actuelle
-		motifsCartes[position]=motifsCartes[hasard]; // Echange les motifs entre les deux cartes
-		motifsCartes[hasard]=sauve; // Place le motif sauvegardé dans la position aléatoire
-	}
+    cartesRetournees = [];
+    nbPairesTrouvees = 0;
+    score = 0;
+    document.getElementById("score").textContent = "Score: " + score;
+    motifsCartes.sort(function() { return 0.5 - Math.random(); }); // Méthode simplifiée pour mélanger
+    genererTableau(); // Recréer le tableau après avoir mélangé
 }
+
+// Ajout de l'écouteur d'événement au bouton rejouer
+document.getElementById("rejouer").onclick = rejouer;
 
 // Fonction appelée lorsqu'un utilisateur clique sur une carte
 function controleJeu(noCarte){
@@ -102,3 +138,5 @@ function controleJeu(noCarte){
 		}
 	}
 }
+
+initialiseJeu(); 

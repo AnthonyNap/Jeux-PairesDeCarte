@@ -8,11 +8,10 @@
     <link rel="icon" type="image/jpg" href="images/avengers.jpg">
     <title>paires de carte</title>
 </head>
-
 <body>
 
     <table id="tapis">
-        <tr>
+        <tr id="ligne1">
             <td><img src="fondcarte.png" alt="carte"></td>
             <td><img src="fondcarte.png" alt="carte"></td>
             <td><img src="fondcarte.png" alt="carte"></td>
@@ -23,7 +22,7 @@
             <td><img src="fondcarte.png" alt="carte"></td>
             <td><img src="fondcarte.png" alt="carte"></td>
         </tr>
-        <tr>
+        <tr id="ligne2">
             <td><img src="fondcarte.png" alt="carte"></td>
             <td><img src="fondcarte.png" alt="carte"></td>
             <td><img src="fondcarte.png" alt="carte"></td>
@@ -37,6 +36,11 @@
         </table>
 
         <div id="score">Score: 0</div>
+
+        <button id="rejouer">Rejouer</button>
+
+        <audio id="flipSound" src="flip.mp3"></audio>
+        <audio id="matchSound" src="match.mp3"></audio>
 
         <script src="pairesdecarte.js"></script>
 
