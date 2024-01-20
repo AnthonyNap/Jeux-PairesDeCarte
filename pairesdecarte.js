@@ -7,6 +7,7 @@ var score = 0;
 var imgCartes;
 var flipSound = document.getElementById("flipSound");
 var matchSound = document.getElementById("matchSound");
+var mismatchSound = document.getElementById("mismatchSound");
 
 function genererTableau() {
     var tapis = document.getElementById("tapis");
@@ -85,6 +86,7 @@ function initialiseJeu(){
     motifsCartes.sort(function() { return 0.5 - Math.random(); }); // Méthode simplifiée pour mélanger
     genererTableau(); // Recréer le tableau après avoir mélangé
 }
+
 
 // Ajout de l'écouteur d'événement au bouton rejouer
 document.getElementById("rejouer").onclick = rejouer;
