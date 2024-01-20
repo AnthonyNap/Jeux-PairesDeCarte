@@ -7,7 +7,7 @@ var score = 0;
 var imgCartes;
 var flipSound = document.getElementById("flipSound");
 var matchSound = document.getElementById("matchSound");
-var mismatchSound = document.getElementById("mismatchSound");
+var echecSound = document.getElementById("echecSound");
 
 function genererTableau() {
     var tapis = document.getElementById("tapis");
@@ -57,6 +57,28 @@ function majAffichage(noCarte) {
         carte.style.visibility = "hidden"; // Cache la carte si une paire est trouvée
         matchSound.play(); // Joue le son de correspondance
     }
+	// Gestion des effets visuels pour les paires trouvées ou non
+    if (cartesRetournees.length == 2) {
+        var carte1 = imgCartes[cartesRetournees[0]];
+        var carte2 = imgCartes[cartesRetournees[1]];
+        var correspondance = motifsCartes[cartesRetournees[0]] == motifsCartes[cartesRetournees[1]];
+
+        if (correspondance) {
+            // Effet pour une paire trouvée
+            carte1.classList.add("trouvee");
+            carte2.classList.add("trouvee");
+        } else {
+            // Effet pour une paire non trouvée
+            carte1.classList.add("non-trouvee");
+            carte2.classList.add("non-trouvee");
+        }
+
+        // Retirer les classes après un court délai
+        setTimeout(function() {
+            carte1.classList.remove("trouvee", "non-trouvee");
+            carte2.classList.remove("trouvee", "non-trouvee");
+        }, 1000);
+    }
 }
 
 // Fonction pour mettre à jour l'affichage du score
@@ -87,58 +109,56 @@ function initialiseJeu(){
     genererTableau(); // Recréer le tableau après avoir mélangé
 }
 
-
 // Ajout de l'écouteur d'événement au bouton rejouer
 document.getElementById("rejouer").onclick = rejouer;
 
 // Fonction appelée lorsqu'un utilisateur clique sur une carte
-function controleJeu(noCarte){
+function controleJeu(noCarte) {
     // On ne peut retourner que deux cartes à la fois
-	if(cartesRetournees.length < 2){
+    if (cartesRetournees.length < 2) {
         // Si la carte cliquée est face cachée
-		if(etatsCartes[noCarte] == 0){
+        if (etatsCartes[noCarte] == 0) {
             // On retourne la carte
-			etatsCartes[noCarte] = 1;
+            etatsCartes[noCarte] = 1;
             // On enregistre la carte retournée
-			cartesRetournees.push(noCarte);
+            cartesRetournees.push(noCarte);
             // On met à jour l'affichage
-			majAffichage(noCarte);
-		}
+            majAffichage(noCarte);
+        }
 
         // Si deux cartes ont été retournées
-		if(cartesRetournees.length == 2){
-            // Par défaut, on suppose que les cartes ne forment pas une paire
-			var nouveauEtat = 0;
-            // On vérifie si les deux cartes forment une paire
-			if(motifsCartes[cartesRetournees[0]] == motifsCartes[cartesRetournees[1]]){
+        if (cartesRetournees.length == 2) {
+            var correspondance = motifsCartes[cartesRetournees[0]] == motifsCartes[cartesRetournees[1]];
+            var nouveauEtat = correspondance ? -1 : 0;
+
+            if (correspondance) {
                 // Les cartes forment une paire, on les marque comme résolues
-				nouveauEtat = -1;
-                // On augmente le nombre de paires trouvées
-				nbPairesTrouvees++;
-                // On augmente le score
-                majScore(10);
-			} else {
-                // Les cartes ne forment pas une paire, on diminue le score
-                majScore(-2);
+                nbPairesTrouvees++;
+                majScore(10); // On augmente le score
+                matchSound.play(); // Joue le son de correspondance
+            } else {
+                // Les cartes ne forment pas une paire
+                majScore(-2); // On diminue le score
+                echecSound.play(); // Joue le son d'échec si les cartes ne correspondent pas
             }
 
             // On met à jour l'état des deux cartes retournées
-			etatsCartes[cartesRetournees[0]] = nouveauEtat;
-			etatsCartes[cartesRetournees[1]] = nouveauEtat;
+            etatsCartes[cartesRetournees[0]] = nouveauEtat;
+            etatsCartes[cartesRetournees[1]] = nouveauEtat;
 
             // On attend un peu avant de retourner les cartes ou de les cacher
-			setTimeout(function(){
-				majAffichage(cartesRetournees[0]);
-				majAffichage(cartesRetournees[1]);
+            setTimeout(function () {
+                majAffichage(cartesRetournees[0]);
+                majAffichage(cartesRetournees[1]);
                 // On vide la liste des cartes retournées pour le prochain tour
-				cartesRetournees = [];
+                cartesRetournees = [];
                 // Si toutes les paires ont été trouvées, on propose de rejouer
-				if(nbPairesTrouvees == 9){
-					rejouer();
-				}
-			}, 750);
-		}
-	}
+                if (nbPairesTrouvees == 9) {
+                    rejouer();
+                }
+            }, 750);
+        }
+    }
 }
 
 initialiseJeu(); 

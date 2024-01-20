@@ -3,11 +3,16 @@ img {
     cursor: pointer;
     height: 250px;
     width: 130px;
-    margin: 10px; /* Ajout d'une marge entre les cartes */
-    transition: transform 0.6s; /* Ajout de la transition pour l'effet */
+    margin: 9px; /* Ajout d'une marge entre les cartes */
+    transition: transform 0.6s, box-shadow 0.5s; /* Ajout de la transition pour l'effet */
     transform-style: preserve-3d;
     position: relative;
 } 
+
+img:hover {
+    transform: scale(1.05); /* Légère augmentation de taille au survol */
+    box-shadow: 0px 0px 20px 5px rgba(255, 255, 255, 0.6); /* Ombre portée */
+}
 
 img.front {
     transform: rotateY(180deg);
@@ -16,6 +21,15 @@ img.front {
 img.back {
     transform: rotateY(0deg);
 }
+
+img.trouvee {
+    border: 3px solid green; /* Bordure verte pour une paire trouvée */
+}
+
+img.non-trouvee {
+    border: 3px solid red; /* Bordure rouge pour une paire non trouvée */
+}
+
 
 /* Table */
 table {
@@ -46,4 +60,9 @@ button#rejouer {
     padding: 10px 20px;
     font-size: 20px;
     cursor: pointer;
+    background-color: #4CAF50;
+}
+
+button#rejouer:hover {
+    background-color: #45a049;
 }
