@@ -1,30 +1,35 @@
-Jeu de Paires de Cartes
-Description :
+# Jeu de Paires de Cartes
 
-Ce jeu de paires de cartes est une application web interactive où les joueurs retournent des cartes pour trouver des paires correspondantes. 
-Le but est de retrouver toutes les paires le plus rapidement possible et avec le moins d'essais.
+## Description
 
-Fonctionnalités :
+Ce jeu de paires de cartes est une application web interactive conçue pour tester la mémoire des joueurs. 
+Le but est de retrouver toutes les paires avec le moins d'essais possible et dans un temps record.
 
-    Interface Visuelle Intuitive : Le jeu présente une interface utilisateur claire et engageante, avec des animations pour les cartes et des effets visuels attrayants.
-    Retournement de Cartes : Les joueurs cliquent sur les cartes pour les retourner, révélant l'image de l'autre côté.
-    Détection de Paires : Lorsque deux cartes identiques sont retournées consécutivement, elles restent visibles. Si elles ne correspondent pas, elles se retournent à nouveau.
-    Effets Sonores : Des effets sonores distincts accompagnent les actions de retournement des cartes, de correspondance et de non-correspondance.
-    Système de Score : Les joueurs gagnent des points en trouvant des paires et en perdent lorsqu'ils retournent des cartes non correspondantes.
-    Compteur de Temps : Un compteur mesure le temps écoulé depuis le début du jeu.
-    Bouton de Rejouer : Permet de recommencer une partie à tout moment.
+## Fonctionnalités
 
-Technologies Utilisées :
+- **Interface Visuelle Intuitive** : Animations fluides pour les actions de retournement et effets visuels pour les correspondances.
+- **Détection de Paires** : Les paires correspondantes restent visibles, renforçant la mémoire visuelle.
+- **Effets Sonores** : Feedback audio pour le retournement et la correspondance des cartes.
+- **Système de Score** : Points accordés pour les paires trouvées et déduits pour les essais incorrects.
+- **Compteur de Temps** : Chronomètre pour suivre la durée de la partie.
+- **Bouton de Rejouer** : Option pour redémarrer le jeu et améliorer le score.
 
-    HTML
-    CSS
-    JavaScript
+## Technologies Utilisées
 
-Installation et Lancement :
+- HTML5
+- CSS3
+- JavaScript ES6
 
-    Clonez le dépôt ou téléchargez les fichiers du projet.
-    Ouvrez le fichier index.html dans un navigateur web moderne pour lancer le jeu.
+## Installation et Lancement
 
-Auteur :
+Clonez le dépôt avec `git clone url_du_dépôt` ou téléchargez les fichiers directement. 
+Ouvrez `index.html` dans votre navigateur pour démarrer le jeu.
 
-[Nap] - Créateur et Développeur
+## Auteur
+
+- **Nap** - _Créateur et Développeur_
+
+## Contribuer
+
+Les contributions sont les bienvenues. 
+Veuillez ouvrir une issue pour discuter des changements souhaités ou soumettre une Pull Request.
