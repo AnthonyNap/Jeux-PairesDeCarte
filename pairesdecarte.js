@@ -21,7 +21,7 @@ function genererTableau() {
     for (var i = 0; i < motifsCartes.length; i++) {
         var cellule = document.createElement("td");
         var img = document.createElement("img");
-        img.src = "fondcarte.png";
+        img.src = "images/fondcarte1.jpg";
         img.setAttribute("class", "back");
         img.noCarte = i;
         img.addEventListener("click", function(){
@@ -47,10 +47,10 @@ function genererTableau() {
 function majAffichage(noCarte) {
     var carte = imgCartes[noCarte];
     if(etatsCartes[noCarte] == 0) {
-        carte.src = "fondcarte.png";
+        carte.src = "images/fondcarte1.jpg";
         carte.setAttribute("class", "back"); // Retourne la carte face cachée
     } else if (etatsCartes[noCarte] == 1) {
-        carte.src = "carte"+motifsCartes[noCarte]+".png";
+        carte.src = "images/carte"+motifsCartes[noCarte]+".png";
         carte.setAttribute("class", "front"); // Retourne la carte face visible
         flipSound.play(); // Joue le son de retournement
     } else {
